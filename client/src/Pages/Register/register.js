@@ -1,13 +1,13 @@
 import "./register.scss"
-import { useState,useNavigate } from 'react';
-import { Link } from "react-router-dom";
+import { useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Register(){
- // const navigate = useNavigate();
+ const navigate = useNavigate();
 
     const[inputs,setInputs]= useState({
-        username:"",
+        //username:"",
         email:"",
         password:"",
         name:"",
@@ -24,10 +24,15 @@ function Register(){
     async function handleClick(e){
         e.preventDefault();
         console.log(inputs);
+        const isEmptyField = Object.values(inputs).some(value => value === "");
+        if (isEmptyField) {
+            setErr("All fields are required");
+            return;
+        }
        try{
-            await axios.post("http://localhost:8800/api/register", inputs);
-            setErr(null);
-           // navigate("/login")
+           await axios.post("http://localhost:8800/api/register", inputs);
+            //setErr(null);
+            navigate("/login")
         }
         catch(err){
             setErr(err.response.data);
@@ -40,7 +45,6 @@ function Register(){
                 <div className="left">
                     <h1>Register</h1>
                     <form>
-                        <input type="username" placeholder="Username" name="username" onChange={handleChange}></input>
                         <input type="email" placeholder="Email" name="email" onChange={handleChange}></input>
                         <input type="password" placeholder="Password" name="password" onChange={handleChange}></input>
                         <input type="text" placeholder="Full Name" name="name" onChange={handleChange}></input>     

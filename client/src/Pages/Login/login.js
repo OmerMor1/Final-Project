@@ -1,16 +1,15 @@
-import "./login.scss"
 import { Link, useNavigate } from "react-router-dom";
-//import { AuthContext } from '../../context/authContext';
+import "./login.scss"
 import { useContext } from 'react';
+import { AuthContext } from '../../context/authContext';
 import { useState } from "react";
 
 
 function Login(){
-  
-   // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const[inputs,setInputs]=useState({
-        username:"",
+        email:"",
         password:""
     })
 
@@ -22,26 +21,37 @@ function Login(){
     };
 
 
-    //const {login} = useContext(AuthContext);
+    const {login} = useContext(AuthContext);
 
     const handleLogin = async (e) => {
         e.preventDefault();
-       /* try{
+        try {
             await login(inputs);
-            navigate("/")
-        }catch(err){
-            setErr(err.response.data)
-        }*/
+            console.log("succ");
+            navigate("/");
+        } catch (err) {
+            console.error("Error caught:", err); // Log the error object
+            if (err.response && err.response.data) {
+                // Handle specific error response from the server
+                setErr(err.response.data);
+            } else {
+                // Handle generic error
+                setErr("An unexpected error occurred.");
+            }
+        }
     };
+    
+    
 
 
     return(
         <div className="login">
             <div className="card">
                 <div className="left">
-                    <h1>English Web!</h1>
+                <h1>English Web!</h1>
                     <p>The future of learning English.
-                     Join us in this exciting journey to learn and improve your English.</p>
+                     Join us in this exciting journey to learn and improve your English.
+                    </p>
                     <span>Don't you have an account?</span>
                     <Link to="/register">
                     <button>Register</button>
@@ -51,9 +61,10 @@ function Login(){
                 <div className="right">
                     <h1>Login</h1>
                     <form>
-                        <input type="text" placeholder="username" name="username" ></input>
-                        <input type="password" placeholder="password" name="password" ></input>
-                        <button>Login</button>
+                        <input type="text" placeholder="email" name="email" onChange={handleChange}></input>
+                        <input type="password" placeholder="password" name="password" onChange={handleChange}></input>
+                        {error}
+                        <button onClick={handleLogin}>Login</button>
                    </form>
                     
                 </div>
