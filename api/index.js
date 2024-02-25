@@ -27,7 +27,7 @@ app.post('/api/register/', (req, res) => {
   const salt = bcrypt.genSaltSync(10);
   const password = bcrypt.hashSync(req.body.password , salt);  
   const email=req.body.email;
-  const name=req.body.name;
+  const username=req.body.name;
 
    //check if user exsist
    const q= "SELECT * FROM users WHERE email = ?"
@@ -54,7 +54,7 @@ try {
 
     db.query(
       "INSERT INTO users (email, password,username) VALUES (?, ?, ?)",
-      [email,password,name]
+      [email,password,username]
   );
 
     console.log("Registration succeeded");

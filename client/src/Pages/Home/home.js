@@ -8,8 +8,8 @@ import { AuthContext } from '../../context/authContext';
 
 
 function Home() {
-  const {currentUser} = useContext(AuthContext);
-
+  const { currentUser } = useContext(AuthContext);
+  const [showTopicWindow, setShowTopicWindow] = useState(true);
   /*const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -106,13 +106,7 @@ console.log(data);*/
   };
 
   const handleLogOut = async () => {
-    tasks.map(async (task) => {
-      console.log(task.completed, task.name, task.tran);
-      try {
-        //await axios.post("http://localhost:8800/api/logout", task.completed, task.name, task.tran);
-      } catch (err) {}
-    });
-    navigate("/logout");
+    navigate("/login");
   };
 
     const topicsList = ['Sport', 'Politics', 'Fashion', 'Music', 'Traveling', 'Movies', 'Books', 'Food', 'Animals', 'Fitness & Wellness'];
@@ -121,6 +115,7 @@ console.log(data);*/
     const handleTopicClick = (topic) => {
       // Save the selected topic in a variable or perform any other action
       setSelectedTopic(topic);
+      setShowTopicWindow(false); 
     };
 
     var dialog = document.getElementById("dialog");
@@ -140,7 +135,7 @@ console.log(data);*/
     <div className="header">
       <div className="info">
         <h5>User: {currentUser.username}</h5>
-        <h5>English Level: A1</h5>
+        <h5>English Level: {currentUser.level}</h5>
         <button className="primary" onClick={openDialog}>Explanation English Levels</button>
         <dialog id="dialog">
           <h2>There are 6 English <br></br>levels in our web</h2>
@@ -158,23 +153,28 @@ console.log(data);*/
     <div className="container">
       <div className="top">
         <h1>English Web</h1>
+        {!currentUser.level && (
         <div className="level-test">
             <h2>Do English level test to determine your start level</h2>
             <button onClick={englishTest}>Start test</button>
-        </div>
-        <div className="topics">
+        </div>)}
+        {showTopicWindow && ( // Conditionally render topic window
+            <div className="topics">
               <h2>Choose a topic for the conversation:</h2>
-            <ul>
-              {topicsList.map((topic, index) => (
-                <li key={index} onClick={() => handleTopicClick(topic)}>
-                  {topic}
-                </li>
-              ))}
-            </ul>
-            {selectedTopic && (
-              <p>Selected Topic: {selectedTopic}</p>
-            )}
-        </div>
+              <ul>
+                {topicsList.map((topic, index) => (
+                  <li key={index} onClick={() => handleTopicClick(topic)}>
+                    {topic}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          <>
+          {selectedTopic && (
+                <p>Selected Topic: {selectedTopic}</p>
+              )}
+          </>
       
       </div>
       <div className="bottom">
@@ -236,8 +236,10 @@ console.log(data);*/
                 </div>
             </div>
         </div>
-        <div className="chatbot">
-          
+          <div className="chatbot">
+          {selectedTopic &&(<div className="chat">
+                <p>start chat</p>
+              </div>)}
         </div>
       </div>
     </div>
