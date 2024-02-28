@@ -13,8 +13,8 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(cors({
-  origin: "http://localhost:3000", // Set the origin of your client
-  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+  origin: "http://localhost:3000", 
+  credentials: true, 
 }));
 
 app.post('/api/register', registerUser);
