@@ -77,7 +77,6 @@ app.post('/api/savewords', async (req, res) => {
     )`);
 
 
-    // Insert tasks into the user's table
     for (const task of tasks) {
       await db.promise().query(`
         INSERT INTO wordsuser_${userId} (name, tran) 
