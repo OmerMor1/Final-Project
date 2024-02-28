@@ -25,19 +25,11 @@ function Login(){
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        try {
+        try{
             await login(inputs);
-            console.log("succ");
-            navigate("/");
-        } catch (err) {
-            console.error("Error caught:", err); // Log the error object
-            if (err.response && err.response.data) {
-                // Handle specific error response from the server
-                setErr(err.response.data);
-            } else {
-                // Handle generic error
-                setErr("An unexpected error occurred.");
-            }
+            navigate("/")
+        }catch(err){
+            setErr(err.response.data)
         }
     };
     

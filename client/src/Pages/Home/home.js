@@ -32,26 +32,54 @@ console.log(data);*/
   };
 
   async function translate(newTask) {
+    console.log(newTask);
     try {
-      //const response = await axios.post('http://localhost:8800/api/translate', { lang: 'he', text: newTask });
-     // console.log(response.data);
-     // return response.data;
+      const response = await axios.post('http://localhost:8800/api/translate', { lang: 'he', text: newTask });
+      console.log(response.data);
+      return response.data;
     } catch (error) {
       console.error("axios request failed", error);
       throw error;
     }
   }
   
+  useEffect(() => {
+    const fetchTasks = async () => {
+      console.log("trying fetch words");
+      try {
+        const response = await axios.get(`http://localhost:8800/api/words/${currentUser.id}`);
+        setTasks(response.data);
+      } catch (error) {
+        console.error("Error fetching tasks:", error);
+      }
+    };
+    if (currentUser) {
+      fetchTasks();
+    }
+  }, [currentUser]);
+
+
+  async function saveWords(userId, tasks){
+    try {
+      const response = await axios.post('http://localhost:8800/api/savewords', { userId: userId, tasks:tasks });
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error("axios request failed", error);
+      throw error;
+    }
+  }
+
   const handleAddTask = async () => {
     if (newTask.trim().length === 0) {
       alert("Please Enter a Task");
     } else {
       try {
         const tran = await translate(newTask);
-       // console.log("Translation result:", tran);
+       console.log("Translation result:", tran);
         setTasks((prevTasks) => [
           ...prevTasks,
-          { name: newTask, completed: false, tran:newTask /*tran: tran.translation*/ },
+          { name: newTask, tran: tran.translation },
         ]);
         setNewTask("");
       } catch (error) {
@@ -106,6 +134,9 @@ console.log(data);*/
   };
 
   const handleLogOut = async () => {
+    console.log("user id:" ,currentUser.id);
+    console.log("all tasks:", tasks);
+    await saveWords(currentUser.id, tasks);
     navigate("/login");
   };
 
