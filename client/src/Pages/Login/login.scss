@@ -1,46 +1,71 @@
+@import "../../app.scss";
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .login {
-    height: 100vh;
-    padding-top: 8px;
-    background-color: rgb(192, 216, 251);
+  height: 100vh;
+  padding-top: 8px;
+  background-color: rgb(192, 216, 251);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .card {
+    width: 80%;
     display: flex;
-    align-items: center;
-    justify-content: center;
-  
-    .card {
-      width: 70%;
+    background-color: white;
+    border-radius: 10px;
+    height: 90%;
+    overflow: hidden;
+    @include mobile {
+      flex-direction: column;
+      width: 90%;
+      height: 95%;
+    }
+
+    .left {
+      flex: 1;
+      background: linear-gradient(#202c67, #1d86e3), center;
+      background-size: cover;
       display: flex;
-      background-color: white;
-      border-radius: 10px;
-      height: 90%;
-      overflow: hidden;
-  
-      .left {
-        flex: 1;
-        background: linear-gradient(#202c67, #1d86e3),
-        center;
-        background-size: cover;
+      flex-direction: column;
+      gap: 10px;
+      padding-left: 30px;
+      color: white;
+
+      h1 {
+        font-family: "Kalam", cursive;
+        font-size: 100px;
+        line-height: 100px;
+
+        @include mobile {
+          font-size: 75px;
+          margin-bottom: 0;
+          padding-bottom: 80px;
+        }
+      }
+
+      p {
+        @include mobile {
+          display: none;
+        }
+      }
+
+      span {
+        font-size: 14px;
+      }
+
+      .buttons {
         display: flex;
-        flex-direction: column;
-        gap: 10px;
-        padding-left: 30px;
-        color: white;
-  
-        h1 {
-            font-family: 'Kalam', cursive;
-          font-size: 100px;
-          line-height: 100px;
-        }
-        
-        p {
-        }
-  
-        span {
-          font-size: 14px;
-        }
-        
+        justify-content: space-between;
+
         button {
-          width: 50%;
           padding: 10px;
+          margin-bottom: 20px;
+          margin-right: 20px;
           border: none;
           background-color: white;
           color: #202c67;
@@ -48,43 +73,43 @@
           cursor: pointer;
         }
       }
-  
-      .right {
-        flex: 1;
-        padding-left: 30px;
-        display: flex;
-        flex-direction: column;
-        gap: 50px;
-        justify-content: center;
-  
-        h1 {
+    }
+
+    .right {
+      flex: 1;
+      padding-left: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+      justify-content: center;
+
+      h1 {
         color: #555;
         margin: 0;
         padding: 0;
-        }
-        
-        form {
-          display: flex;
-          flex-direction: column;
-          gap: 30px;
-          
-          input {
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+
+        input {
           border: none;
           border-bottom: 1px solid lightgray;
           padding: 20px 10px;
-          }
-          
-          button {
-           // margin-top: 130px;
-            width: 50%;
-            padding: 10px;
-            border: none;
-            background-color: #202c67;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-          }
+        }
+
+        button {
+          width: 50%;
+          padding: 10px;
+          border: none;
+          background-color: #202c67;
+          color: white;
+          font-weight: bold;
+          cursor: pointer;
         }
       }
     }
   }
+}
